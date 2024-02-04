@@ -1,5 +1,9 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
+contextBridge.exposeInMainWorld('electronAPI', {
+  getDirectoryStructure: (path: string) => ipcRenderer.invoke('get-directory-structure', path)
+});
+
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
 
